@@ -1,63 +1,88 @@
-import pybullet as p
+import pybullet as pb
 import pybullet_data
 from time import sleep
-import numpy as np
+import math
 
-p.connect(p.GUI)
-p.setGravity(0, 0, -10)
-p.setAdditionalSearchPath(pybullet_data.getDataPath())  
-p.loadURDF("plane.urdf")
+physicsClient = pb.connect(pb.GUI)
+pb.setGravity(0, 0, -9.81) #Earth Gravity
+pb.setAdditionalSearchPath(pybullet_data.getDataPath())
+pb.loadURDF("plane.urdf")
 
-# Load hand
-objects = p.loadMJCF("./MPL/MPL.xml")
-hand = objects[0]
+models = pb.loadMJCF("Sim/MPL/MPL.xml")
+hand = models[0]
 
-# FIX 1: Keep hand floating in air (useFixedBase=True equivalent for MJCF)
-# We need to create a fixed constraint
-constraint = p.createConstraint(
-    hand, -1, -1, -1, 
-    p.JOINT_FIXED, 
-    [0, 0, 0], 
-    [0, 0, 0], 
-    [0, 0, 0.5]  # Position in space
+constraint = pb.createConstraint(
+    parentBodyUniqueId=hand,
+    parentLinkIndex=-1,   
+    childBodyUniqueId=-1,  
+    childLinkIndex=-1,
+    jointType=pb.JOINT_FIXED,
+    jointAxis=[0, 0, 0],
+    parentFramePosition=[0, 0, 0],
+    childFramePosition=[0, 0, 0.5] 
 )
 
-# Get joint info
-num_joints = p.getNumJoints(hand)
-print(f"\n{num_joints} joints in MPL hand:")
-for i in range(num_joints):
-    info = p.getJointInfo(hand, i)
-    print(f"  Joint {i}: {info[1].decode()} - Range: {info[8]:.2f} to {info[9]:.2f}")
+pb.resetDebugVisualizerCamera(cameraDistance=0.5, cameraYaw=45, cameraPitch=-20, cameraTargetPosition=[0, 0, 0.5])
 
-# FIX 2: Add sliders with proper range (PyBullet sliders work better with specific ranges)
-sliders = []
-for i in range(num_joints):
-    info = p.getJointInfo(hand, i)
-    if info[2] != p.JOINT_FIXED:  # Only movable joints
-        lower = info[8]
-        upper = info[9]
-        
-        # Make sure we have a valid range
-        if lower == upper:
-            lower = -1.5
-            upper = 1.5
-        
-        slider = p.addUserDebugParameter(
-            info[1].decode(),  # Joint name
-            lower,             # Lower limit
-            upper,             # Upper limit
-            (lower + upper) / 2  # Start at middle position
-        )
-        sliders.append((i, slider))
+def degToRad(degrees):
+    return (degrees * math.pi) / 180.0
 
-print(f"\n{len(sliders)} sliders added. Use them to control the hand!")
+sliders = {}
+nameIndex = {}
 
-# Control loop
-while True:
-    # Read sliders and control joints
-    for joint_id, slider_id in sliders:
-        target = p.readUserDebugParameter(slider_id)
-        p.setJointMotorControl2(hand, joint_id, p.POSITION_CONTROL, target, force=5.0)
+ROM_LIMITS = {
+    # Wrist
+    "wrist_PRO":    (degToRad(-140.0), degToRad(60.0)),
+    "wrist_UDEV":   (degToRad(-10.0), degToRad(17.0)),
+    "wrist_FLEX":   (degToRad(-40.0), degToRad(70.0)),
+    # Thumb
+    "thumb_ABD":    (degToRad(-7.5), degToRad(7.5)),
+    "thumb_MCP":    (degToRad(0.0), degToRad(90.0)),
+    "thumb_PIP":    (degToRad(0.0), degToRad(120.0)),
+    "thumb_DIP":    (degToRad(0.0), degToRad(80.0)),
+    # Index
+    "index_ABD":    (degToRad(-7.5), degToRad(7.5)),
+    "index_MCP":    (degToRad(0.0), degToRad(90.0)),
+    "index_PIP":    (degToRad(0.0), degToRad(120.0)),
+    "index_DIP":    (degToRad(0.0), degToRad(80.0)),
+    # Middle
+    "middle_ABD":   (degToRad(-7.5), degToRad(7.5)),
+    "middle_MCP":   (degToRad(0.0), degToRad(90.0)),
+    "middle_PIP":   (degToRad(0.0), degToRad(120.0)),
+    "middle_DIP":   (degToRad(0.0), degToRad(80.0)),
+    # Ring
+    "ring_ABD":     (degToRad(-7.5), degToRad(7.5)),
+    "ring_MCP":     (degToRad(0.0), degToRad(90.0)),
+    "ring_PIP":     (degToRad(0.0), degToRad(120.0)),
+    "ring_DIP":     (degToRad(0.0), degToRad(80.0)),
+    # Pinky
+    "pinky_ABD":    (degToRad(-7.5), degToRad(7.5)),
+    "pinky_MCP":    (degToRad(0.0), degToRad(90.0)),
+    "pinky_PIP":    (degToRad(0.0), degToRad(120.0)),
+    "pinky_DIP":    (degToRad(0.0), degToRad(80.0)),
+}
+
+for i in range(pb.getNumJoints(hand)):
+    info = pb.getJointInfo(hand, i)
+    type = info[2]
+    jointName = info[1].decode()
+    nameIndex[info[1].decode()] = i
+
+    if type == pb.JOINT_FIXED:
+        continue
+    if jointName in ROM_LIMITS:
+        lower, upper = ROM_LIMITS[jointName]
     
-    p.stepSimulation()
+    q0 = pb.getJointState(hand, i)[0]
+
+
+    sliderID = pb.addUserDebugParameter(jointName, lower, upper, q0)
+    sliders[jointName] = sliderID
+
+while True:
+    for name, sliderID in sliders.items():
+        angle = pb.readUserDebugParameter(sliderID)
+        pb.resetJointState(hand, nameIndex[name], angle)
+
+    pb.stepSimulation()
     sleep(0.01)
