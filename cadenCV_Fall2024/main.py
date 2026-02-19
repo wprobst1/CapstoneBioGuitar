@@ -88,12 +88,24 @@ rest_paths = {
     "whole": ["./resources/template/rest/whole_rest.jpg"]
 }
 
-flag_paths = ["./resources/template/flag/eighth_flag_1.jpg",
-                "./resources/template/flag/eighth_flag_2.jpg",
-                "./resources/template/flag/eighth_flag_3.jpg",
-                "./resources/template/flag/eighth_flag_4.jpg",
-                "./resources/template/flag/eighth_flag_5.jpg",
-                "./resources/template/flag/eighth_flag_6.jpg"]
+flag_paths = {
+   "eighth": [
+        "./resources/template/flag/eighth_flag_1.jpg",
+        "./resources/template/flag/eighth_flag_2.jpg",
+        "./resources/template/flag/eighth_flag_3.jpg",
+        "./resources/template/flag/eighth_flag_4.jpg",
+        "./resources/template/flag/eighth_flag_5.jpg",
+        "./resources/template/flag/eighth_flag_6.jpg"
+        ],
+    "sixteenth": [
+        "./resources/template/flag/Sixteenth_flag_1.jpg",
+        "./resources/template/flag/Sixteenth_flag_2.jpg",
+        "./resources/template/flag/Sixteenth_flag_3.jpg",
+        "./resources/template/flag/Sixteenth_flag_4.jpg",
+        "./resources/template/flag/Sixteenth_flag_5.jpg",
+        "./resources/template/flag/Sixteenth_flag_6.jpg"
+        ]
+}
 
 barline_paths = ["./resources/template/barline/barline_1.jpg",
                  "./resources/template/barline/barline_2.jpg",
@@ -135,7 +147,8 @@ half_rest_imgs = [cv2.imread(half, 0) for half in rest_paths["half"]]
 whole_rest_imgs = [cv2.imread(whole, 0) for whole in rest_paths['whole']]
 
 # Eighth Flag
-eighth_flag_imgs = [cv2.imread(flag, 0) for flag in flag_paths]
+eighth_flag_imgs = [cv2.imread(flag, 0) for flag in flag_paths["eighth"]]
+sixteenth_flag_imgs = [cv2.imread(flag, 0) for flag in flag_paths["sixteenth"]]
 
 # Bar line
 bar_imgs = [cv2.imread(barline, 0) for barline in barline_paths]
@@ -169,6 +182,8 @@ whole_rest_lower, whole_rest_upper, whole_rest_thresh = 50, 150, 0.80
 # Eighth Flag
 eighth_flag_lower, eighth_flag_upper, eighth_flag_thresh = 50, 150, 0.8
 
+# 16th Flag
+sixteenth_flag_lower, sixteenth_flag_upper,sixteenth_flag_thresh=50,150,0.75
 # Bar line
 bar_lower, bar_upper, bar_thresh = 50, 150, 0.85
 
@@ -833,7 +848,7 @@ if __name__ == "__main__":
 
     # always assert that notes in a bar equal duration dictated by time signature
     for i in range(len(staffs)):
-        print("[INFO] Finding Primitives on Staff ", i+1)
+        #print("[INFO] Finding Primitives on Staff ", i+1)
         staff_primitives = []
         staff_img = staffs[i].getImage()
         staff_img_color = staff_imgs_color[i]
@@ -841,11 +856,11 @@ if __name__ == "__main__":
         box_thickness = 2
 
         # ------- Find primitives on staff -------
-        print("[INFO] Matching sharp accidental template...")
+        #print("[INFO] Matching sharp accidental template...")
         sharp_boxes = locate_templates(staff_img, sharp_imgs, sharp_lower, sharp_upper, sharp_thresh)
         sharp_boxes = merge_boxes([j for i in sharp_boxes for j in i], 0.5)
 
-        print("[INFO] Displaying Matching Results on staff", i + 1)
+       # print("[INFO] Displaying Matching Results on staff", i + 1)
         for box in sharp_boxes:
             box.draw(staff_img_color, red, box_thickness)
             text = "sharp"
@@ -857,11 +872,11 @@ if __name__ == "__main__":
             sharp = Primitive("sharp", 0, box)
             staff_primitives.append(sharp)
 
-        print("[INFO] Matching flat accidental template...")
+       # print("[INFO] Matching flat accidental template...")
         flat_boxes = locate_templates(staff_img, flat_imgs, flat_lower, flat_upper, flat_thresh)
         flat_boxes = merge_boxes([j for i in flat_boxes for j in i], 0.5)
 
-        print("[INFO] Displaying Matching Results on staff", i + 1)
+        #print("[INFO] Displaying Matching Results on staff", i + 1)
         for box in flat_boxes:
             box.draw(staff_img_color, red, box_thickness)
             text = "flat"
@@ -882,6 +897,7 @@ if __name__ == "__main__":
             box.draw(staff_img_color, red, box_thickness)
             text = "1/4 note"
             font = cv2.FONT_HERSHEY_DUPLEX
+            print("Processing Quarter note, center is at",box.getCenter())
             textsize = cv2.getTextSize(text, font, fontScale=0.7, thickness=1)[0]
             x = int(box.getCorner()[0] - (textsize[0] // 2))
             y = int(box.getCorner()[1] + box.getHeight() + 20)
@@ -989,12 +1005,12 @@ if __name__ == "__main__":
             staff_primitives.append(whole)
 
         print("[INFO] Matching eighth flag template...")
-        flag_boxes = locate_templates(staff_img, eighth_flag_imgs, eighth_flag_lower, eighth_flag_upper, eighth_flag_thresh)
-        flag_boxes = merge_boxes([j for i in flag_boxes for j in i], 0.5)
+        eighth_flag_boxes = locate_templates(staff_img, eighth_flag_imgs, eighth_flag_lower, eighth_flag_upper, eighth_flag_thresh)
+        eighth_flag_boxes = merge_boxes([j for i in eighth_flag_boxes for j in i], 0.5)
 
         print("[INFO] Displaying Matching Results on staff", i + 1)
 
-        for box in flag_boxes:
+        for box in eighth_flag_boxes:
             box.draw(staff_img_color, red, box_thickness)
             text = "1/8 flag"
             font = cv2.FONT_HERSHEY_DUPLEX
