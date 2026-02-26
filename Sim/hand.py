@@ -8,7 +8,7 @@ pb.setGravity(0, 0, -9.81) #Earth Gravity
 pb.setAdditionalSearchPath(pybullet_data.getDataPath())
 pb.loadURDF("plane.urdf")
 
-models = pb.loadMJCF("Sim/MPL/MPL.xml")
+models = pb.loadMJCF("./MPL/MPL.xml")
 hand = models[0]
 
 constraint = pb.createConstraint(
