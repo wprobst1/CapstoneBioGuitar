@@ -14,7 +14,6 @@ if __name__ == "__main__":
             tree=ET.parse(args.file)
             root=tree.getroot()
             part=root[-1]
-            print(part[0][2])
             print( f"the bpm is {part[0].find('direction').find('sound').get('tempo')}")
             for measure in part:
                 for note in measure.findall('note'):
