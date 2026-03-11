@@ -5,7 +5,7 @@ import csv
 from mediapipe.tasks.python import BaseOptions
 from mediapipe.tasks.python.vision import HandLandmarker, HandLandmarkerOptions, RunningMode
 
-start_time = time.perf_counter()
+first_frame = True
 times = []
 next_index = 0
 joint_count = 0
@@ -17,7 +17,7 @@ with open(r"MediaPipe\test.csv", newline='') as csvfile:   #change csv path as n
     for row in reader:
         times.append(float(row[0]))
 
-header = ["Time", "Tx", "Ty", "Tz", "Ix", "Iy", "Iz", "Mx", "My", "Mz", "Rx", "Ry", "Rz", "Px", "Py", "Pz"]
+header = ["Time", "Wx", "Wy", "Wz", "Tx", "Ty", "Tz", "Ix", "Iy", "Iz", "Mx", "My", "Mz", "Rx", "Ry", "Rz", "Px", "Py", "Pz"]
 with open(r"MediaPipe\test_output.csv", 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(header)
@@ -34,6 +34,9 @@ with HandLandmarker.create_from_options(options) as landmarker:
     while capture.isOpened():
         ret, frame = capture.read()
 
+        if first_frame: 
+            start_time = time.perf_counter()
+            first_frame = False
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
         results = landmarker.detect(mp_image)
