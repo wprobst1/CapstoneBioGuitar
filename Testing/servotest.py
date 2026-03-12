@@ -1,13 +1,12 @@
 import time
-import board
-import busio
+from adafruit_pca9685 import ExtendedI2C as I2C
 from adafruit_pca9685 import PCA9685
 
-i2c = busio.I2C(board.scl, board.sca)
-pca = PCA9685(i2c)
+i2c = I2C(7)
+pca = PCA9685(i2c, address = 0x40)
 pca.frequency = 50
 
-def move(servo, pulse):
+def move(servo, pulse): #max is 8191 min is 1638, DO NOT EXCEED 7000
     pca.channels[servo].duty_cycle = pulse
 
 move(0, 7000)
