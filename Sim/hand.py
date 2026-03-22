@@ -8,7 +8,7 @@ pb.setGravity(0, 0, -9.81) #Earth Gravity
 pb.setAdditionalSearchPath(pybullet_data.getDataPath())
 pb.loadURDF("plane.urdf")
 
-models = pb.loadMJCF("./MPL/MPL.xml")
+models = pb.loadMJCF("Sim/MPL/MPL.xml")
 hand = models[0]
 
 constraint = pb.createConstraint(
@@ -19,7 +19,8 @@ constraint = pb.createConstraint(
     jointType=pb.JOINT_FIXED,
     jointAxis=[0, 0, 0],
     parentFramePosition=[0, 0, 0],
-    childFramePosition=[0, 0, 0.5] 
+    childFramePosition=[0, 0, 0.5], 
+    childFrameOrientation=pb.getQuaternionFromEuler([-math.pi / 2, 0, 0])
 )
 
 pb.resetDebugVisualizerCamera(cameraDistance=0.5, cameraYaw=45, cameraPitch=-20, cameraTargetPosition=[0, 0, 0.5])
