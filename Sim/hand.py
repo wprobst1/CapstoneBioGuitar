@@ -10,6 +10,8 @@ pb.loadURDF("plane.urdf")
 
 models = pb.loadMJCF("Sim/MPL/MPL.xml")
 hand = models[0]
+guitar_models = pb.loadMJCF("Sim/guitar_model/guitar.xml")
+guitar_parts = guitar_models[0]
 
 constraint = pb.createConstraint(
     parentBodyUniqueId=hand,
@@ -21,6 +23,18 @@ constraint = pb.createConstraint(
     parentFramePosition=[0, 0, 0],
     childFramePosition=[0, 0, 0.5], 
     childFrameOrientation=pb.getQuaternionFromEuler([-math.pi / 2, 0, 0])
+)
+
+constraint = pb.createConstraint(
+    parentBodyUniqueId=guitar_parts,
+    parentLinkIndex=-1,   
+    childBodyUniqueId=-1,  
+    childLinkIndex=-1,
+    jointType=pb.JOINT_FIXED,
+    jointAxis=[0, 0, 0],
+    parentFramePosition=[0, 0, 0],
+    childFramePosition=[0, 0, 0.5], 
+    childFrameOrientation=pb.getQuaternionFromEuler([0, 0, math.pi / 2])
 )
 
 pb.resetDebugVisualizerCamera(cameraDistance=0.5, cameraYaw=45, cameraPitch=-20, cameraTargetPosition=[0, 0, 0.5])
