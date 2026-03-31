@@ -8,9 +8,10 @@ Created on Mon Mar 20 15:00:20 2023
 from Fingering import *
 from GuitarProReader import *
 from collections import deque
+import csv
 
 
-MAX_BEATS_PER_SOLVE = 8
+MAX_BEATS_PER_SOLVE = 4
 
 
 def yield_song_fingering(gp_file, generator):
@@ -46,7 +47,7 @@ def yield_song_fingering(gp_file, generator):
         print(sequence[i].get_node_cost_string(generator))
         yield sequence[i]
         
-        
+       
         
 def yield_measure_fingering(measure, generator, start_node):
     print(f"Evaluating Measure #{measure.header.number}")
@@ -71,8 +72,7 @@ def yield_measure_fingering(measure, generator, start_node):
 instrument_config = InstrumentConfig.SixStringBarreSetup()
 generator_config = FingeringGeneratorConfig(instrument_config)
 fingering_generator = FingeringGenerator(generator_config)        
-song_file = "./queen-bohemian_rhapsody_complete.gp3"
-out_file = open("Fingering - bohemian",'w')     
+song_file = "Parsing/red-hot-chili-peppers-snow_hey_oh.gp3"   
 #song_file = "Songs\Lynyrd Skynyrd - Sweet Home Alabama.gp3"
 #out_file = open("Fingering - Sweet Home Alabama.txt",'w')
 #song_file = "Songs\Racer X - Technical Difficulties.gp3"
@@ -84,6 +84,22 @@ out_file = open("Fingering - bohemian",'w')
 #start_node = FingeringNode(-1,1,generator_config.idle_fingering,StringPositions({}))
 
 #for node in yield_measure_fingering(measure, fingering_generator, start_node):
-for node in yield_song_fingering(song_file, fingering_generator):
-    out_file.write(node.get_node_cost_string(fingering_generator)+"\n")
-out_file.close()
+
+def node_to_csv_rows(node):
+    string_to_finger = {}
+    rows = []
+    for finger, finger_pos in node.fingering.items():
+        for string in finger_pos.strings:
+            string_to_finger[string] = finger
+    
+    for string, fret in node.positions.string_map.items():
+        finger = string_to_finger.get(string, None)
+        rows.append([f"{node.time:.6f}", node.duration, string, fret, finger,])
+    return rows
+
+with open("Parsing/parsed.csv", 'w', newline='', encoding='utf-8') as f:
+    writer = csv.writer(f)
+    writer.writerow(["time", "duration", "string", "fret", "finger"])
+    for item in yield_song_fingering(song_file, fingering_generator):
+        for row in node_to_csv_rows(item):
+            writer.writerow(row)
