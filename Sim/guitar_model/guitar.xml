@@ -25,42 +25,42 @@
 
             <geom name="string1"
                   type="cylinder"
-                  fromto="0.32455 -0.79314 0.024   0.32455 -0.13714 0.024"
+                  fromto="0.37455 -0.79314 0.04   0.37455 -0.13714 0.04"
                   size="0.00101"
                   rgba="1 0 0 1"
                   contype="2" conaffinity="2"/>
 
             <geom name="string2"
                   type="cylinder"
-                  fromto="0.31678 -0.79314 0.024   0.31678 -0.13714 0.024"
+                  fromto="0.36678 -0.79314 0.04   0.36678 -0.13714 0.04"
                   size="0.00101"
                   rgba="0 1 0 1"
                   contype="4" conaffinity="4"/>
 
             <geom name="string3"
                   type="cylinder"
-                  fromto="0.30901 -0.79314 0.024   0.30901 -0.13714 0.024"
+                  fromto="0.35901 -0.79314 0.04   0.35901 -0.13714 0.04"
                   size="0.00101"
                   rgba="0 0 1 1"
                   contype="8" conaffinity="8"/>
 
             <geom name="string4"
                   type="cylinder"
-                  fromto="0.30124 -0.79314 0.024   0.30124 -0.13714 0.024"
+                  fromto="0.35124 -0.79314 0.04   0.35124 -0.13714 0.04"
                   size="0.00101"
                   rgba="1 0 0 1"
                   contype="16" conaffinity="16"/>
 
             <geom name="string5"
                   type="cylinder"
-                  fromto="0.29347 -0.79314 0.024   0.29347 -0.13714 0.024"
+                  fromto="0.34347 -0.79314 0.04   0.34347 -0.13714 0.04"
                   size="0.00101"
                   rgba="0 1 0 1"
                   contype="32" conaffinity="32"/>
 
             <geom name="string6"
                   type="cylinder"
-                  fromto="0.2857 -0.79314 0.024   0.2857 -0.13714 0.024"
+                  fromto="0.3357 -0.79314 0.04   0.3357 -0.13714 0.04"
                   size="0.00101"
                   rgba="0 0 1 1"
                   contype="64" conaffinity="64"/>

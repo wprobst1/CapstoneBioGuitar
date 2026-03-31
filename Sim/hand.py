@@ -21,8 +21,8 @@ constraint = pb.createConstraint(
     jointType=pb.JOINT_FIXED,
     jointAxis=[0, 0, 0],
     parentFramePosition=[0, 0, 0],
-    childFramePosition=[0, 0, 0.5], 
-    childFrameOrientation=pb.getQuaternionFromEuler([-math.pi / 2, 0, 0])
+    childFramePosition=[0, 0, 0.45], 
+    childFrameOrientation=pb.getQuaternionFromEuler([-math.pi / 2, 0, math.pi])
 )
 
 constraint = pb.createConstraint(
@@ -33,11 +33,11 @@ constraint = pb.createConstraint(
     jointType=pb.JOINT_FIXED,
     jointAxis=[0, 0, 0],
     parentFramePosition=[0, 0, 0],
-    childFramePosition=[0, 0, 0.5], 
+    childFramePosition=[0.2, -0.15, 0.6], 
     childFrameOrientation=pb.getQuaternionFromEuler([0, 0, math.pi / 2])
 )
 
-pb.resetDebugVisualizerCamera(cameraDistance=0.5, cameraYaw=45, cameraPitch=-20, cameraTargetPosition=[0, 0, 0.5])
+pb.resetDebugVisualizerCamera(cameraDistance=0.5, cameraYaw=45, cameraPitch=-30, cameraTargetPosition=[0, 0, 0.6])
 
 def degToRad(degrees):
     return (degrees * math.pi) / 180.0
