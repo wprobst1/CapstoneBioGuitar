@@ -29,14 +29,37 @@ options = HandLandmarkerOptions(
 )
 
 capture = cv2.VideoCapture(0)
+countdown_start = None
+countdown_duration = 3
+countdown_active = True
+start_time = None
 
 with HandLandmarker.create_from_options(options) as landmarker:
     while capture.isOpened():
-        ret, frame = capture.read()
 
-        if first_frame: 
-            start_time = time.perf_counter()
-            first_frame = False
+        ret, frame = capture.read()
+        if not ret:
+            break
+
+        if countdown_active:
+            if countdown_start is None:
+                countdown_start = time.perf_counter()
+
+            elapsed_countdown = time.perf_counter() - countdown_start
+            remaining = int(countdown_duration - elapsed_countdown) + 1
+
+            if remaining > 0:
+                cv2.putText(frame, str(remaining), (200, 200), cv2.FONT_HERSHEY_PLAIN, 5.0, (255, 255, 255), 2)
+            else:
+                if start_time is None:
+                    start_time = time.perf_counter()
+                countdown_active = False
+
+            cv2.imshow("landmarks", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+            continue 
+        
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
         results = landmarker.detect(mp_image)
@@ -59,10 +82,13 @@ with HandLandmarker.create_from_options(options) as landmarker:
                 writer.writerow([times[next_index]] + landmarks)
             next_index += 1
                 
-        elapsed = time.perf_counter() - start_time if not first_frame else 0.0
+        if start_time is not None:
+            elapsed = time.perf_counter() - start_time
+        else:
+            elapsed = 0.0
 
         cv2.putText(frame, f"t = {elapsed:.3f}s", (10, 40), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), 2)
-        cv2.putText(frame, f"note {next_index}/{len(times)}", (10, 80), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), 2)
+        #cv2.putText(frame, f"note {next_index}/{len(times)}", (10, 80), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), 2)
 
         cv2.imshow("landmarks", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
