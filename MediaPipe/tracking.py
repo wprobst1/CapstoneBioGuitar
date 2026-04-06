@@ -29,6 +29,7 @@ options = HandLandmarkerOptions(
 )
 
 capture = cv2.VideoCapture(0)
+
 countdown_start = None
 countdown_duration = 3
 countdown_active = True
@@ -49,13 +50,15 @@ with HandLandmarker.create_from_options(options) as landmarker:
             remaining = int(countdown_duration - elapsed_countdown) + 1
 
             if remaining > 0:
-                cv2.putText(frame, str(remaining), (200, 200), cv2.FONT_HERSHEY_PLAIN, 5.0, (255, 255, 255), 2)
+                cv2.putText(frame, str(remaining), (400, 400), cv2.FONT_HERSHEY_PLAIN, 10.0, (255, 255, 255), 2)
             else:
                 if start_time is None:
                     start_time = time.perf_counter()
                 countdown_active = False
 
-            cv2.imshow("landmarks", frame)
+            display_frame = cv2.resize(frame, (960, 540))
+            cv2.imshow("landmarks", display_frame) 
+
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
             continue 
@@ -71,7 +74,7 @@ with HandLandmarker.create_from_options(options) as landmarker:
             for landmark in hand:     #loops over each of the 21 hand landmarks
                 height, width, _ = frame.shape  #extracts height and width of camera frame
                 x_pix, y_pix = int(landmark.x * width), int(landmark.y * height)    #converts landmark position (0-1) into pixel
-                cv2.circle(frame, (x_pix, y_pix), 3, (0, 255, 0), 1)   #draws circle at given pixels
+                cv2.circle(frame, (x_pix, y_pix), 5, (0, 0, 0), -1)   #draws circle at given pixels
                 if joint_count % 4 == 0:
                     landmarks += [landmark.x, landmark.y, landmark.z]
                 joint_count += 1
@@ -87,10 +90,12 @@ with HandLandmarker.create_from_options(options) as landmarker:
         else:
             elapsed = 0.0
 
-        cv2.putText(frame, f"t = {elapsed:.3f}s", (10, 40), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), 2)
+        cv2.putText(frame, f"t = {elapsed:.3f}s", (100, 400), cv2.FONT_HERSHEY_PLAIN, 10.0, (255, 255, 255), 2)
         #cv2.putText(frame, f"note {next_index}/{len(times)}", (10, 80), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), 2)
 
-        cv2.imshow("landmarks", frame)
+        display_frame = cv2.resize(frame, (960, 540))
+        cv2.imshow("landmarks", display_frame)  
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 

@@ -16,7 +16,7 @@ for i in range(-1, pb.getNumJoints(hand)):
 
 guitar_parts = pb.loadURDF(
     "Sim/guitar_model/guitar.urdf",
-    basePosition=[-0.4, -0.45, 0.55],
+    basePosition=[-0.4, -0.4, 0.57],
     baseOrientation=pb.getQuaternionFromEuler([0, 0, math.pi / 2]),
     useFixedBase=True
 )
@@ -41,7 +41,7 @@ constraint = pb.createConstraint(
     childFrameOrientation=pb.getQuaternionFromEuler([-math.pi / 2, 0, math.pi])
 )
 
-pb.resetDebugVisualizerCamera(cameraDistance=0.5, cameraYaw=45, cameraPitch=-20, cameraTargetPosition=[0, 0, 0.55])
+pb.resetDebugVisualizerCamera(cameraDistance=0.5, cameraYaw=45, cameraPitch=-30, cameraTargetPosition=[0, 0, 0.6])
 
 def degToRad(degrees):
     return (degrees * math.pi) / 180.0
