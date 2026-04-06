@@ -28,6 +28,20 @@ options = HandLandmarkerOptions(
     num_hands=1
 )
 
+FRETS = [
+    (182, 158, 226), (242, 155, 224), (297, 151, 224),
+    (349, 150, 223), (399, 147, 220), (444, 144, 219),
+    (488, 143, 219), (527, 142, 218), (565, 139, 216),
+    (600, 135, 215), (633, 134, 215), (665, 132, 212),
+    (695, 130, 212), (721, 128, 212), (748, 128, 211),
+    (772, 127, 211), (796, 126, 212), (819, 125, 212),
+    (839, 122, 210), (858, 121, 210), (877, 121, 209),
+]
+
+def draw_fretboard(frame):
+    for x, y_top, y_bot in FRETS:
+        cv2.line(frame, (x, y_top), (x, y_bot), (0, 200, 255), 1)
+
 capture = cv2.VideoCapture(0)
 
 countdown_start = None
@@ -57,6 +71,7 @@ with HandLandmarker.create_from_options(options) as landmarker:
                 countdown_active = False
 
             display_frame = cv2.resize(frame, (960, 540))
+            draw_fretboard(display_frame)
             cv2.imshow("landmarks", display_frame) 
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -90,10 +105,10 @@ with HandLandmarker.create_from_options(options) as landmarker:
         else:
             elapsed = 0.0
 
-        cv2.putText(frame, f"t = {elapsed:.3f}s", (100, 400), cv2.FONT_HERSHEY_PLAIN, 10.0, (255, 255, 255), 2)
-        #cv2.putText(frame, f"note {next_index}/{len(times)}", (10, 80), cv2.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), 2)
+        cv2.putText(frame, f"t = {elapsed:.3f}s", (50, 100), cv2.FONT_HERSHEY_PLAIN, 5.0, (255, 255, 255), 2)
 
         display_frame = cv2.resize(frame, (960, 540))
+        draw_fretboard(display_frame)
         cv2.imshow("landmarks", display_frame)  
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
