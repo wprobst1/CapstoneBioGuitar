@@ -18,7 +18,7 @@ with open(r"Parsing\parsed.csv", newline='') as csvfile:   #change csv path as n
         times.append(float(row[0]))
 
 header = ["Time", "Wx", "Wy", "Wz", "Tx", "Ty", "Tz", "Ix", "Iy", "Iz", "Mx", "My", "Mz", "Rx", "Ry", "Rz", "Px", "Py", "Pz"]
-with open(r"MediaPipe\test_output.csv", 'w', newline='') as csvfile:
+with open(r"MediaPipe\snow.csv", 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(header)
 
@@ -95,7 +95,7 @@ with HandLandmarker.create_from_options(options) as landmarker:
                 joint_count += 1
 
         if next_index < len(times) and (time.perf_counter() - start_time) >= times[next_index]: 
-            with open(r"MediaPipe\test_output.csv", 'a', newline='') as csvfile:
+            with open(r"MediaPipe\snow.csv", 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow([times[next_index]] + landmarks)
             next_index += 1

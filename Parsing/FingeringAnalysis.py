@@ -72,7 +72,7 @@ def yield_measure_fingering(measure, generator, start_node):
 instrument_config = InstrumentConfig.SixStringBarreSetup()
 generator_config = FingeringGeneratorConfig(instrument_config)
 fingering_generator = FingeringGenerator(generator_config)        
-song_file = "Parsing/red-hot-chili-peppers-snow_hey_oh.gp3"   
+song_file = "Parsing/led-zeppelin-whole_lotta_love_2.gp3"   
 #song_file = "Songs\Lynyrd Skynyrd - Sweet Home Alabama.gp3"
 #out_file = open("Fingering - Sweet Home Alabama.txt",'w')
 #song_file = "Songs\Racer X - Technical Difficulties.gp3"

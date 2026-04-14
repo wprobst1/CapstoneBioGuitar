@@ -6,7 +6,7 @@ from mediapipe.tasks.python import BaseOptions
 from mediapipe.tasks.python.vision import HandLandmarker, HandLandmarkerOptions, RunningMode
 import numpy as np
 import time
-from adafruit_pca9685 import ExtendedI2C as I2C
+from adafruit_extended_bus import ExtendedI2C as I2C
 from adafruit_pca9685 import PCA9685
 
 options = HandLandmarkerOptions(
@@ -84,10 +84,6 @@ with HandLandmarker.create_from_options(options) as landmarker:
             servo_positions = {name: angle(deg) for name, deg in angles.items()}
 
             for name, pwm in servo_positions.items():
-                move(FINGER_CHANNELS[name], pwm)
+                move(FINGER_CHANNELS[name], pwm) 
 
-        display_frame = cv2.resize(frame, (960, 540))
-        cv2.imshow("landmarks", display_frame)  
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        pass
