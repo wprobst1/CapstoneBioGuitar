@@ -16,7 +16,7 @@ for i in range(-1, pb.getNumJoints(hand)):
 
 guitar_parts = pb.loadURDF(
     "Sim/guitar_model/guitar.urdf",
-    basePosition=[-0.4, -0.45, 0.55],
+    basePosition=[-0.4, -0.4, 0.58],
     baseOrientation=pb.getQuaternionFromEuler([0, 0, math.pi / 2]),
     useFixedBase=True
 )

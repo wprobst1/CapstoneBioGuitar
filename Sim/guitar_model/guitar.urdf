@@ -26,12 +26,12 @@
   <!-- String 1 -->
   <link name="string1">
     <collision>
-      <origin xyz="0.37455 -0.465 0.04" rpy="1.5708 1.5708 0"/>
+      <origin xyz="0.35455 -0.465 0.03" rpy="1.5708 1.5708 0"/>
       <geometry><cylinder radius="0.001" length="0.656"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.37455 -0.465 0.04" rpy="1.5708 1.5708 0"/>
-      <geometry><cylinder radius="0.001" length="0.656"/></geometry>
+      <origin xyz="0.35455 -0.465 0.03" rpy="1.5708 1.5708 0"/>
+      <geometry><cylinder radius="0.0005" length="0.656"/></geometry>
       <material name="s1"><color rgba="1 0 0 1"/></material>
     </visual>
   </link>
@@ -44,12 +44,12 @@
   <!-- String 2 -->
   <link name="string2">
     <collision>
-      <origin xyz="0.36678 -0.465 0.04" rpy="1.5708 1.5708 0"/>
+      <origin xyz="0.34678 -0.465 0.03" rpy="1.5708 1.5708 0"/>
       <geometry><cylinder radius="0.001" length="0.656"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.36678 -0.465 0.04" rpy="1.5708 1.5708 0"/>
-      <geometry><cylinder radius="0.001" length="0.656"/></geometry>
+      <origin xyz="0.34678 -0.465 0.03" rpy="1.5708 1.5708 0"/>
+      <geometry><cylinder radius="0.0005" length="0.656"/></geometry>
       <material name="s2"><color rgba="0 1 0 1"/></material>
     </visual>
   </link>
@@ -62,12 +62,12 @@
   <!-- String 3 -->
   <link name="string3">
     <collision>
-      <origin xyz="0.35901 -0.465 0.04" rpy="1.5708 1.5708 0"/>
+      <origin xyz="0.33901 -0.465 0.03" rpy="1.5708 1.5708 0"/>
       <geometry><cylinder radius="0.001" length="0.656"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.35901 -0.465 0.04" rpy="1.5708 1.5708 0"/>
-      <geometry><cylinder radius="0.001" length="0.656"/></geometry>
+      <origin xyz="0.33901 -0.465 0.03" rpy="1.5708 1.5708 0"/>
+      <geometry><cylinder radius="0.0005" length="0.656"/></geometry>
       <material name="s3"><color rgba="0 0 1 1"/></material>
     </visual>
   </link>
@@ -80,12 +80,12 @@
   <!-- String 4 -->
   <link name="string4">
     <collision>
-      <origin xyz="0.35124 -0.465 0.04" rpy="1.5708 1.5708 0"/>
+      <origin xyz="0.33124 -0.465 0.03" rpy="1.5708 1.5708 0"/>
       <geometry><cylinder radius="0.001" length="0.656"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.35124 -0.465 0.04" rpy="1.5708 1.5708 0"/>
-      <geometry><cylinder radius="0.001" length="0.656"/></geometry>
+      <origin xyz="0.33124 -0.465 0.03" rpy="1.5708 1.5708 0"/>
+      <geometry><cylinder radius="0.0005" length="0.656"/></geometry>
       <material name="s4"><color rgba="1 0 0 1"/></material>
     </visual>
   </link>
@@ -98,12 +98,12 @@
   <!-- String 5 -->
   <link name="string5">
     <collision>
-      <origin xyz="0.34347 -0.465 0.04" rpy="1.5708 1.5708 0"/>
+      <origin xyz="0.32347 -0.465 0.03" rpy="1.5708 1.5708 0"/>
       <geometry><cylinder radius="0.001" length="0.656"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.34347 -0.465 0.04" rpy="1.5708 1.5708 0"/>
-      <geometry><cylinder radius="0.001" length="0.656"/></geometry>
+      <origin xyz="0.32347 -0.465 0.03" rpy="1.5708 1.5708 0"/>
+      <geometry><cylinder radius="0.0005" length="0.656"/></geometry>
       <material name="s5"><color rgba="0 1 0 1"/></material>
     </visual>
   </link>
@@ -116,12 +116,12 @@
   <!-- String 6 -->
   <link name="string6">
     <collision>
-      <origin xyz="0.3357 -0.465 0.04" rpy="1.5708 1.5708 0"/>
+      <origin xyz="0.3157 -0.465 0.03" rpy="1.5708 1.5708 0"/>
       <geometry><cylinder radius="0.001" length="0.656"/></geometry>
     </collision>
     <visual>
-      <origin xyz="0.3357 -0.465 0.04" rpy="1.5708 1.5708 0"/>
-      <geometry><cylinder radius="0.001" length="0.656"/></geometry>
+      <origin xyz="0.3157 -0.465 0.03" rpy="1.5708 1.5708 0"/>
+      <geometry><cylinder radius="0.0005" length="0.656"/></geometry>
       <material name="s6"><color rgba="0 0 1 1"/></material>
     </visual>
   </link>

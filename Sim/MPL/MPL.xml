@@ -119,7 +119,7 @@
                                             <inertial pos="4.32004e-005 -0.0125318 0.000903476" quat="0.516251 0.4829 -0.483241 0.516498" mass="0.00274415" diaginertia="1.19635e-007 1.09202e-007 7.77873e-008" />
                                             <joint name="index_DIP" type="hinge" pos="0 0 0" axis="-1 0 0" range="0 1.38"/>
                                             <geom type="mesh" mesh="index3"/>
-                                            <geom type="capsule" fromto="0 0 0  0 -0.03175 0" size="0.008" contype="1" conaffinity="1"/>
+                                            <geom type="cylinder" fromto="0 0 0  0 -0.03175 0" size="0.008" contype="1" conaffinity="1"/>
                                             <site name="index_distal" pos="0 -0.0132 -0.0038" size=".0075 .01 .006"/>
                                             <site class="IMU" name="index_IMU" pos="0 -0.0093 0.00063" quat=".5 .5 -.5 .5" size=".003 .003 .003"/>
                                         </body>
@@ -146,7 +146,7 @@
                                             <inertial pos="4.31236e-005 -0.0125318 0.000903446" quat="0.516263 0.482913 -0.483228 0.516487" mass="0.00274417" diaginertia="1.19635e-007 1.09202e-007 7.77884e-008" />
                                             <joint name="middle_DIP" type="hinge" pos="0 0 0" axis="-1 0 0" range="0 1.38"/>
                                             <geom type="mesh" mesh="middle3"/>
-                                            <geom type="capsule" fromto="0 0 0  0 -0.03175 0" size="0.008" contype="1" conaffinity="1"/>
+                                            <geom type="cylinder" fromto="0 0 0  0 -0.03175 0" size="0.008" contype="1" conaffinity="1"/>
                                             <site name="middle_distal" pos="0 -0.0129 -0.0038" size=".0075 .01 .006"/>
                                             <site class="IMU" name="middle_IMU" pos="0 -0.0093 0.00063" quat=".5 .5 -.5 .5" size=".003 .003 .003"/>
                                         </body>
@@ -173,7 +173,7 @@
                                             <inertial pos="4.31973e-005 -0.0125318 0.000903457" quat="0.516255 0.482902 -0.483238 0.516495" mass="0.00274416" diaginertia="1.19635e-007 1.09202e-007 7.77877e-008" />
                                             <joint name="ring_DIP" type="hinge" pos="0 0 0" axis="-1 0 0" range="0 1.38"/>
                                             <geom type="mesh" mesh="ring3"/>
-                                            <geom type="capsule" fromto="0 0 0  0 -0.03175 0" size="0.008" contype="1" conaffinity="1"/>
+                                            <geom type="cylinder" fromto="0 0 0  0 -0.03175 0" size="0.008" contype="1" conaffinity="1"/>
                                             <site name="ring_distal" pos="0 -0.0117 -0.0038" size=".0075 .01 .006"/>
                                             <site class="IMU" name="ring_IMU" pos="0 -0.0093 0.00063" quat=".5 .5 -.5 .5" size=".003 .003 .003"/>
                                         </body>
@@ -200,7 +200,7 @@
                                             <inertial pos="3.85026e-005 -0.0125047 0.000912295" quat="0.516037 0.484447 -0.483043 0.515448" mass="0.00273265" diaginertia="1.19141e-007 1.08629e-007 7.77271e-008" />
                                             <joint name="pinky_DIP" type="hinge" pos="0 0 0" axis="-1 0 0" range="0 1.38"/>
                                             <geom type="mesh" mesh="pinky3"/>
-                                            <geom type="capsule" fromto="0 0 0  0 -0.03175 0" size="0.008" contype="1" conaffinity="1"/>
+                                            <geom type="cylinder" fromto="0 0 0  0 -0.03175 0" size="0.008" contype="1" conaffinity="1"/>
                                             <site name="pinky_distal" pos="0 -0.0121 -0.0038" size=".0075 .01 .006"/>
                                             <site class="IMU" name="pinky_IMU" pos="0 -0.0093 0.00063" quat=".5 .5 -.5 .5" size=".003 .003 .003"/>
                                         </body>
