@@ -1,0 +1,7 @@
+opencv-python
+mediapipe
+numpy
+adafruit-circuitpython-pca9685
+adafruit-extended-bus
+pybullet
+guitarpro
