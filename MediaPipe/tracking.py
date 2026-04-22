@@ -48,6 +48,7 @@ countdown_start = None
 countdown_duration = 3
 countdown_active = True
 start_time = None
+show_frets = True  # toggle state for fret lines
 
 with HandLandmarker.create_from_options(options) as landmarker:
     while capture.isOpened():
@@ -71,11 +72,15 @@ with HandLandmarker.create_from_options(options) as landmarker:
                 countdown_active = False
 
             display_frame = cv2.resize(frame, (960, 540))
-            draw_fretboard(display_frame)
+            if show_frets:
+                draw_fretboard(display_frame)
             cv2.imshow("landmarks", display_frame) 
 
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            key = cv2.waitKey(1) & 0xFF
+            if key == ord('q'):
                 break
+            elif key == ord('f'):
+                show_frets = not show_frets
             continue 
         
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -108,11 +113,15 @@ with HandLandmarker.create_from_options(options) as landmarker:
         cv2.putText(frame, f"t = {elapsed:.3f}s", (50, 100), cv2.FONT_HERSHEY_PLAIN, 5.0, (255, 255, 255), 2)
 
         display_frame = cv2.resize(frame, (960, 540))
-        draw_fretboard(display_frame)
+        if show_frets:
+            draw_fretboard(display_frame)
         cv2.imshow("landmarks", display_frame)  
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q'):
             break
+        elif key == ord('f'):
+            show_frets = not show_frets
 
 capture.release()
 cv2.destroyAllWindows()
