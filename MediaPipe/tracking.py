@@ -11,19 +11,19 @@ next_index = 0
 joint_count = 0
 
 #puts all timestamps into list 
-with open(r"Parsing\parsed.csv", newline='') as csvfile:   #change csv path as needed
+with open(r"Parsing/parsed.csv", newline='') as csvfile:   #change csv path as needed
     reader = csv.reader(csvfile)
     next(reader)
     for row in reader:
         times.append(float(row[0]))
 
 header = ["Time", "Wx", "Wy", "Wz", "Tx", "Ty", "Tz", "Ix", "Iy", "Iz", "Mx", "My", "Mz", "Rx", "Ry", "Rz", "Px", "Py", "Pz"]
-with open(r"MediaPipe\snow.csv", 'w', newline='') as csvfile:
+with open(r"MediaPipe/snow.csv", 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(header)
 
 options = HandLandmarkerOptions(
-    base_options=BaseOptions(model_asset_path=r"MediaPipe\hand_landmarker.task"),
+    base_options=BaseOptions(model_asset_path=r"MediaPipe/hand_landmarker.task"),
     running_mode=RunningMode.IMAGE,
     num_hands=1
 )
@@ -100,7 +100,7 @@ with HandLandmarker.create_from_options(options) as landmarker:
                 joint_count += 1
 
         if next_index < len(times) and (time.perf_counter() - start_time) >= times[next_index]: 
-            with open(r"MediaPipe\snow.csv", 'a', newline='') as csvfile:
+            with open(r"MediaPipe/snow.csv", 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow([times[next_index]] + landmarks)
             next_index += 1
